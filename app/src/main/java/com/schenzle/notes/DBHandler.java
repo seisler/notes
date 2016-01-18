@@ -11,7 +11,8 @@ import android.util.Log;
 import java.sql.SQLException;
 
 
-public class DBHandler {
+public class DBHandler
+{
 
     public static final String KEY_ID = "_id";
     public static final String KEY_TITLE = "title";
@@ -27,7 +28,7 @@ public class DBHandler {
     public static final String DB_CREATE =
             "create table " + DB_TABLE + "( " +
                     KEY_ID + " integer primary key " + "autoincrement," +
-                    KEY_TITLE + " text not null, "  +
+                    KEY_TITLE + " text not null, " +
                     KEY_NOTE + " text not null);";
 
     private final Context context;
@@ -46,7 +47,7 @@ public class DBHandler {
     }
 
     /**
-     *  Open DB
+     * Open DB
      *
      * @return DBhandler
      * @throws SQLException
@@ -70,8 +71,7 @@ public class DBHandler {
      * Create a new value
      *
      * @param title String
-     * @param note String
-     *
+     * @param note  String
      * @return long
      */
     public long createNote(String title, String note)
@@ -87,7 +87,6 @@ public class DBHandler {
      * Delete a note
      *
      * @param noteId long
-     *
      * @return boolean
      */
     public boolean deleteNoteById(long noteId)
@@ -95,8 +94,12 @@ public class DBHandler {
         return bd.delete(DB_TABLE, KEY_ID + " = " + noteId, null) > 0;
     }
 
-    public boolean deleteAllNOtes()
-    {
+    /**
+     * Delete all notes
+     *
+     * @return boolean
+     */
+    public boolean deleteAllNOtes() {
         return bd.delete(DB_TABLE, null, null) > 0;
     }
 
@@ -104,7 +107,6 @@ public class DBHandler {
      * Get a note by Id
      *
      * @param noteId long
-     *
      * @return Cursor
      * @throws SQLException
      */
@@ -113,7 +115,7 @@ public class DBHandler {
         Cursor mCursor = bd.query(
                 true,
                 DB_TABLE,
-                new String[] { KEY_ID, KEY_TITLE, KEY_NOTE },
+                new String[]{KEY_ID, KEY_TITLE, KEY_NOTE},
                 KEY_ID + " = " + noteId,
                 null,
                 null,
@@ -122,7 +124,7 @@ public class DBHandler {
                 null
         );
 
-        if(mCursor != null) mCursor.moveToFirst();
+        if (mCursor != null) mCursor.moveToFirst();
 
         return mCursor;
     }
@@ -132,10 +134,11 @@ public class DBHandler {
      *
      * @return Cursor
      */
-    public Cursor getAllNotes() {
+    public Cursor getAllNotes()
+    {
         return bd.query(
                 DB_TABLE,
-                new String[] { KEY_ID, KEY_TITLE, KEY_NOTE},
+                new String[]{KEY_ID, KEY_TITLE, KEY_NOTE},
                 null,
                 null,
                 null,
@@ -148,9 +151,8 @@ public class DBHandler {
      * Update a note
      *
      * @param noteId long
-     * @param title String
-     * @param note String
-     *
+     * @param title  String
+     * @param note   String
      * @return boolean
      */
     public boolean updateNote(long noteId, String title, String note)
@@ -163,8 +165,6 @@ public class DBHandler {
     }
 
 
-
-
     /**
      * Notes DB Helper
      */
@@ -175,7 +175,7 @@ public class DBHandler {
          *
          * @param con Context
          */
-        public NotesOpenHelper (Context con)
+        public NotesOpenHelper(Context con)
         {
             super(con, DB_NAME, null, VERSION);
         }
@@ -186,7 +186,7 @@ public class DBHandler {
         {
             try {
                 db.execSQL(DB_CREATE);
-            }catch(android.database.SQLException e) {
+            } catch (android.database.SQLException e) {
                 e.printStackTrace();
             }
         }

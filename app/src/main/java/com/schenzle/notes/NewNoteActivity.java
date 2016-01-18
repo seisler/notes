@@ -54,8 +54,8 @@ public class NewNoteActivity extends AppCompatActivity
      */
     private void createNote()
     {
-        titleEditText = (EditText) findViewById(R.id.titleEditText);
-        noteEditText = (EditText) findViewById(R.id.noteEditText);
+        titleEditText = (EditText) findViewById(R.id.editTitle);
+        noteEditText = (EditText) findViewById(R.id.editNote);
 
         dbHandler.createNote(
                 titleEditText.getText().toString(),

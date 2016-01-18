@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLException;
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity
         };
 
         int[] to = new int[]{
-                R.id.titleLine,
-                R.id.noteLine
+                R.id.noteLine,
+                R.id.titleLine
         };
 
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
@@ -78,10 +79,12 @@ public class MainActivity extends AppCompatActivity
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                 Intent i = new Intent(getApplicationContext(), ViewNoteActivity.class);
                 i.putExtra("id", id);
+                i.putExtra("title", cursor.getString(cursor.getColumnIndex(DBHandler.KEY_TITLE)));
+                i.putExtra("note", cursor.getString(cursor.getColumnIndex(DBHandler.KEY_NOTE)));
 
-                Log.d("cheater", parent.getAdapter().getView(position, view, parent).toString());
                 startActivity(i);
             }
         });

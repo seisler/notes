@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -12,6 +13,7 @@ public class ViewNoteActivity extends AppCompatActivity
     Toolbar toolbar;
     DBHandler dbHandler;
     Intent intent;
+    EditText titleEditText, noteEditText;
     long noteId;
     String title, note;
 
@@ -40,8 +42,10 @@ public class ViewNoteActivity extends AppCompatActivity
 
     private void setDataIntoView()
     {
-        TextView title = (TextView) findViewById(R.id.titleTextView);
-        title.setText(String.valueOf(noteId));
+        titleEditText = (EditText) findViewById(R.id.editTitle);
+        noteEditText = (EditText) findViewById(R.id.editNote);
+        titleEditText.setText(title);
+        noteEditText.setText(note);
     }
 
 
