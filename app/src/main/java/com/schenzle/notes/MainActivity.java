@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity
     ListView list;
     Toolbar toolbar;
     DBHandler dbHandler;
-    Toast toastSqlFeedback, toastDeleteAllFeedBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -100,8 +99,7 @@ public class MainActivity extends AppCompatActivity
         try {
             dbHandler.open();
         } catch (SQLException ex) {
-            toastSqlFeedback = Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT);
-            toastSqlFeedback.show();
+            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -130,8 +128,8 @@ public class MainActivity extends AppCompatActivity
 
         dbHandler.close();
 
-        toastDeleteAllFeedBack = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
-        toastDeleteAllFeedBack.show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
         loadViewList();
     }
 

@@ -9,5 +9,10 @@
     <string name="note">Note</string>
     <string name="title">Title</string>
     <string name="all_notes_deleted">All notes deleted</string>
+    <string name="delete_note">Note deleted</string>
+    <string name="delete_note_fail">Note deletion fail</string>
+    <string name="update_note">Note Updated</string>
+    <string name="update_failed">Update failed</string>
     <string name="no_notes_to_delete">There isn\'t notes to delete</string>
+    <string name="open_db_failed">DB Connection Failed</string>
 </resources>

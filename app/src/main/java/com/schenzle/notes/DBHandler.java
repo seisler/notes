@@ -99,7 +99,8 @@ public class DBHandler
      *
      * @return boolean
      */
-    public boolean deleteAllNOtes() {
+    public boolean deleteAllNOtes()
+    {
         return bd.delete(DB_TABLE, null, null) > 0;
     }
 
@@ -158,10 +159,10 @@ public class DBHandler
     public boolean updateNote(long noteId, String title, String note)
     {
         ContentValues args = new ContentValues();
-        args.put(KEY_TITLE, title);
         args.put(KEY_NOTE, note);
+        args.put(KEY_TITLE, title);
 
-        return bd.update(DB_TABLE, args, KEY_ID + " = " + noteId, null) > 0;
+        return bd.update(DB_TABLE, args, KEY_ID + " = " + String.valueOf(noteId), null) > 0;
     }
 
 

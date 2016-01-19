@@ -3,20 +3,24 @@ package com.schenzle.notes;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class NewNoteActivity extends AppCompatActivity
+public class NewNoteActivity extends AppCompatActivity implements TextWatcher
 {
-    EditText titleEditText, noteEditText;
-    DBHandler dbHandler;
-    Toolbar toolbar;
-    Button saveBtn;
-    Toast toastSqlFeedback;
+    private EditText titleEditText, noteEditText;
+    private DBHandler dbHandler;
+    public Toolbar toolbar;
+    private Button saveBtn;
+    private LinearLayout form;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,8 +29,10 @@ public class NewNoteActivity extends AppCompatActivity
         setContentView(R.layout.new_note);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         saveBtn = (Button) findViewById(R.id.saveBtn);
+        saveBtn.setEnabled(false);
+
+        startValidation();
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -37,6 +43,20 @@ public class NewNoteActivity extends AppCompatActivity
             }
         });
     }
+
+    /**
+     * Start the form validation
+     *
+     */
+    public void startValidation()
+    {
+        titleEditText = (EditText) findViewById(R.id.editTitle);
+        noteEditText = (EditText) findViewById(R.id.editNote);
+
+        titleEditText.addTextChangedListener(this);
+        noteEditText.addTextChangedListener(this);
+    }
+
 
     /**
      * Save a note
@@ -54,9 +74,6 @@ public class NewNoteActivity extends AppCompatActivity
      */
     private void createNote()
     {
-        titleEditText = (EditText) findViewById(R.id.editTitle);
-        noteEditText = (EditText) findViewById(R.id.editNote);
-
         dbHandler.createNote(
                 titleEditText.getText().toString(),
                 noteEditText.getText().toString()
@@ -71,8 +88,7 @@ public class NewNoteActivity extends AppCompatActivity
         try {
             dbHandler.open();
         } catch (SQLException ex) {
-            toastSqlFeedback = Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT);
-            toastSqlFeedback.show();
+            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -82,5 +98,24 @@ public class NewNoteActivity extends AppCompatActivity
     private void closeDb()
     {
         dbHandler.close();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+    @Override
+    public void afterTextChanged(Editable s)
+    {
+        String title = titleEditText.getText().toString();
+        String note = noteEditText.getText().toString();
+
+        if(!StringValidation.isFieldEmpty(title) && !StringValidation.isFieldEmpty(note)) {
+            saveBtn.setEnabled(true);
+        } else {
+            saveBtn.setEnabled(false);
+        }
     }
 }
